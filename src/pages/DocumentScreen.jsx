@@ -27,9 +27,9 @@ const DocumentScreen = () => {
     setAdharNumber(e.currentTarget.value);
   };
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
+//   const openModal = () => {
+//     setIsModalOpen(true);
+//   };
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -46,7 +46,6 @@ const DocumentScreen = () => {
   };
   return (
     <div>
-      <button onClick={openModal}>Open Modal</button>
       {isShowing && (
         <div className="z-30 relative top-2 left-2">
           <p>Signing...</p>
