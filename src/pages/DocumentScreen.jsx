@@ -8,6 +8,7 @@ const DocumentScreen = () => {
   const [isAdharVerify, setIsAdharVerify] = useState(false);
   const [isAgreeCondition, setisAgreeCondition] = useState(false);
   const [isShowing, setIsShowing] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const verifyAdhar = () => {
     if (adharNumber && adharNumber.length === 11) {
@@ -27,9 +28,9 @@ const DocumentScreen = () => {
     setAdharNumber(e.currentTarget.value);
   };
 
-//   const openModal = () => {
-//     setIsModalOpen(true);
-//   };
+  //   const openModal = () => {
+  //     setIsModalOpen(true);
+  //   };
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -42,12 +43,14 @@ const DocumentScreen = () => {
       setTimeout(() => {
         setIsShowing(false);
       }, 3000);
+    } else {
+      setErrorMessage("Invaild OTP Number");
     }
   };
   return (
     <div>
       {isShowing && (
-        <div className="z-30 relative top-2 left-2">
+        <div className="z-30 absolute top-10 left-10 flex flex-col">
           <p>Signing...</p>
           <p className="text-blue-600">Mutual Non-Disclosure Agreement</p>
           <div className="flex border bg-green-300 border-green-600 rounded-md px-10 py-2">
@@ -55,10 +58,16 @@ const DocumentScreen = () => {
           </div>
         </div>
       )}
-      <img src="/TextDocument.webp" alt="Document" className="w-full h-full" />
+      <img
+        src="/TextDocument.webp"
+        alt="Document"
+        className="w-full h-full z-10"
+      />
       <Modal
         isOpen={isModalOpen}
         onRequestClose={closeModal}
+        shouldCloseOnOverlayClick={false}
+        shouldCloseOnEsc={false}
         contentLabel="Modal"
         className="w-[60rem]"
       >
@@ -74,7 +83,7 @@ const DocumentScreen = () => {
               <div className="space-y-2">
                 <div className="flex space-x-3">
                   <input
-                    className="h-10 w-96 border border-gray-600 rounded-md"
+                    className="h-10 w-96 border border-gray-600 rounded-md focus:outline-none"
                     value={adharNumber}
                     onChange={onChangeAdharNumber}
                   />
@@ -110,7 +119,7 @@ const DocumentScreen = () => {
                   <div className="flex space-x-4 ml-44">
                     <input
                       type={"text"}
-                      className="h-10 w-60 border border-gray-400 rounded-md"
+                      className="h-10 w-60 border border-gray-400 rounded-md focus:outline-none"
                       value={otpNumber}
                       onChange={(e) => {
                         setOtpNumber(e.currentTarget.value);
@@ -128,6 +137,9 @@ const DocumentScreen = () => {
                     >
                       Submit
                     </button>
+                    {errorMessage && (
+                      <p className="text-red-500">{errorMessage}</p>
+                    )}
                   </div>
                 </div>
               </div>
